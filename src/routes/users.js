@@ -60,12 +60,12 @@ router.get('/range', async (req, res, next) => {
     const { min, max } = req.query;
     if (!min || !max) {
       res.status(400);
-      return next(new Error('请提供 min 和 max 查询参数'));
+      return next(new Error('Please provide min and max query parameters'));
     }
 
     const usersInRange = await users.find({
       _id: {
-        $gte: ObjectId(min), // ✅ 转换为 ObjectId
+        $gte: ObjectId(min), // ✅ convert to ObjectId
         $lte: ObjectId(max),
       },
     });
