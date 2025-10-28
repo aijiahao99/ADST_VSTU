@@ -2,6 +2,7 @@
 const express = require('express');
 const db = require('../db/connection');
 const users = db.get('users');
+const { ObjectId } = require('mongodb');
 
 const router = express.Router();
 
@@ -59,11 +60,14 @@ router.get('/range', async (req, res, next) => {
     const { min, max } = req.query;
     if (!min || !max) {
       res.status(400);
-      return next(new Error('Please provide min and max query parameters'));
+      return next(new Error('请提供 min 和 max 查询参数'));
     }
 
     const usersInRange = await users.find({
-      _id: { $gte: min, $lte: max },
+      _id: {
+        $gte: ObjectId(min), // ✅ 转换为 ObjectId
+        $lte: ObjectId(max),
+      },
     });
 
     res.json(usersInRange);
