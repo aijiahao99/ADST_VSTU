@@ -1,7 +1,11 @@
+/* eslint-disable consistent-return */
+/* eslint-disable import/order */
 // routes/users.js
 const express = require('express');
 const db = require('../db/connection');
+
 const users = db.get('users');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { ObjectId } = require('mongodb');
 
 const router = express.Router();
@@ -31,6 +35,7 @@ router.get('/username/:username', async (req, res, next) => {
 });
 
 /* get a user with appropriate _id */
+// eslint-disable-next-line consistent-return
 router.get('/id/:id', async (req, res, next) => {
   try {
     const user = await users.findOne({ _id: req.params.id });
